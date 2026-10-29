@@ -125,6 +125,59 @@
       color: var(--teal);
     }
 
+    .notice-board {
+      margin-top: 30px;
+    }
+
+    .notice-board h2 {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+    .notice-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .notice {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--teal);
+      border-radius: 6px;
+      background: #fff3cc;
+      box-shadow: 0 2px 5px rgb(32 50 57 / 8%);
+    }
+
+    .notice-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .notice-header h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .notice time {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .notice p {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .board-status {
+      color: var(--muted);
+    }
+
     @media (max-width: 460px) {
       .page {
         width: min(100% - 28px, 560px);
@@ -158,11 +211,59 @@
           <p class="message-status" id="message-status" role="status" aria-live="polite"></p>
         </form>
       </section>
+      <section class="notice-board" aria-labelledby="board-title">
+        <h2 id="board-title">Message board</h2>
+        <p class="board-status" id="board-status" role="status" aria-live="polite">Loading messages...</p>
+        <div class="notice-list" id="notice-list"></div>
+      </section>
     </main>
   </div>
   <script>
     const messageForm = document.querySelector("#message-form");
     const messageStatus = document.querySelector("#message-status");
+    const boardStatus = document.querySelector("#board-status");
+    const noticeList = document.querySelector("#notice-list");
+
+    function addNotice(message) {
+      const notice = document.createElement("article");
+      notice.className = "notice";
+
+      const header = document.createElement("div");
+      header.className = "notice-header";
+      const name = document.createElement("h3");
+      name.textContent = message.name;
+      const time = document.createElement("time");
+      time.dateTime = message.receivedAt;
+      time.textContent = new Date(message.receivedAt).toLocaleString();
+      header.append(name, time);
+
+      const content = document.createElement("p");
+      content.textContent = message.message;
+      notice.append(header, content);
+      noticeList.prepend(notice);
+    }
+
+    async function loadMessages() {
+      try {
+        const response = await fetch("/messages");
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.error || "Messages could not be loaded.");
+        }
+
+        noticeList.replaceChildren();
+        for (const message of result.messages) {
+          addNotice(message);
+        }
+        boardStatus.textContent = result.messages.length
+          ? ""
+          : "No messages yet. Be the first to leave one!";
+      } catch (error) {
+        boardStatus.textContent = error instanceof Error
+          ? error.message
+          : "Messages could not be loaded. Please try again.";
+      }
+    }
 
     messageForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -185,6 +286,8 @@
         }
 
         messageForm.reset();
+        addNotice(result.message);
+        boardStatus.textContent = "";
         messageStatus.textContent = "Thanks! Your message has been received.";
       } catch (error) {
         messageStatus.textContent = error instanceof Error
@@ -192,6 +295,8 @@
           : "Your message could not be sent. Please try again.";
       }
     });
+
+    loadMessages();
   </script>
 </body>
 </html>

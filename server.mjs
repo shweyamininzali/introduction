@@ -132,7 +132,7 @@ const server = createServer(async (request, response) => {
       const contentType = (request.headers["content-type"] ?? "").split(";")[0].trim();
       const message = parseMessage(body, contentType);
       messages.push(message);
-      sendJson(response, 201, { received: true });
+      sendJson(response, 201, { received: true, message });
     } catch (error) {
       if (error instanceof RequestError) {
         sendJson(response, error.status, { error: error.message });
@@ -141,6 +141,11 @@ const server = createServer(async (request, response) => {
       console.error("Could not save message:", error);
       sendJson(response, 500, { error: "The message could not be saved." });
     }
+    return;
+  }
+
+  if (request.method === "GET" && pathname === "/messages") {
+    sendJson(response, 200, { messages });
     return;
   }
 
