@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" role="img">
+  <rect x="12" y="12" width="336" height="236" rx="22" fill="#fff0df"/>
+  <circle cx="65" cy="61" r="22" fill="#f3c65e"/>
+  <path d="M70 154h191l-14 60H85Z" fill="#176b68"/>
+  <path d="M258 166h39c14 0 14 21 0 21h-45" fill="none" stroke="#176b68" stroke-width="12" stroke-linecap="round"/>
+  <path d="M101 154c5-18 17-28 35-30 15-1 24 11 39 9 17-3 21-14 41-11 17 2 28 14 31 32Z" fill="#e8795b"/>
+  <path d="M122 143c10-11 18-11 27 0m46-1c9-12 18-12 28-1" fill="none" stroke="#f3c65e" stroke-width="7" stroke-linecap="round"/>
+  <path d="M140 112c-17-20 13-27-1-48m53 48c-17-20 13-27-1-48m54 48c-17-20 13-27-1-48" fill="none" stroke="#4b9b8c" stroke-width="7" stroke-linecap="round" stroke-dasharray="12 80" stroke-dashoffset="0">
+    <animate attributeName="stroke-dashoffset" values="0;-92" dur="2.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values=".35;1;.35" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <path d="M88 215h188" stroke="#203239" stroke-width="8" stroke-linecap="round"/>
+  <path d="M105 231h158" stroke="#e8795b" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="83" cy="118" r="7" fill="#e8795b"><animate attributeName="cy" values="118;108;118" dur="1.7s" repeatCount="indefinite"/></circle>
+  <circle cx="288" cy="91" r="6" fill="#176b68"><animate attributeName="cy" values="91;101;91" dur="2s" repeatCount="indefinite"/></circle>
+</svg>

@@ -63,28 +63,26 @@
       align-items: stretch;
     }
 
-    .intro, .details {
+    .intro, .details, .photo-card, .interest-card {
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--card);
     }
 
     .intro {
-      position: relative;
-      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(150px, 0.7fr);
+      align-items: center;
+      gap: 20px;
       padding: clamp(30px, 6vw, 66px);
     }
 
-    .intro::after {
-      position: absolute;
-      right: -42px;
-      bottom: -72px;
-      width: 190px;
-      height: 190px;
-      border: 26px solid #f9e8bb;
+    .profile-image {
+      display: block;
+      width: min(100%, 240px);
+      aspect-ratio: 1;
       border-radius: 50%;
-      content: "";
-      pointer-events: none;
+      justify-self: center;
     }
 
     .eyebrow {
@@ -175,6 +173,104 @@
       color: #40595b;
     }
 
+    .visual-section {
+      margin-top: 42px;
+    }
+
+    .visual-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 17px;
+    }
+
+    .visual-heading h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+    .visual-heading p {
+      max-width: 420px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .photo-card {
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .photo-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .photo-card figcaption {
+      padding: 14px 16px 16px;
+    }
+
+    .photo-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .photo-credit {
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }
+
+    .photo-credit a {
+      color: var(--teal);
+      text-underline-offset: 2px;
+    }
+
+    .interest-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .interest-card {
+      display: grid;
+      grid-template-columns: minmax(110px, 0.85fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      padding: 16px;
+    }
+
+    .interest-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .interest-card h3 {
+      margin: 0 0 5px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+
+    .interest-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     footer {
       padding-top: 27px;
       color: var(--muted);
@@ -199,6 +295,11 @@
       .intro {
         min-height: 340px;
         padding: 35px 27px;
+        grid-template-columns: 1fr;
+      }
+
+      .profile-image {
+        width: 175px;
       }
 
       h1 {
@@ -213,6 +314,31 @@
         gap: 15px;
         padding: 22px;
       }
+
+      .visual-heading {
+        align-items: start;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .interest-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interest-card {
+        grid-template-columns: 110px minmax(0, 1fr);
+        gap: 12px;
+      }
     }
   </style>
 </head>
@@ -225,9 +351,12 @@
 
     <main>
       <section class="intro" aria-labelledby="page-title">
-        <p class="eyebrow">Hello there, I'm</p>
-        <h1 id="page-title">Izzy<span>.</span></h1>
-        <p class="lead">I'm a master's student at KIC Japan, finding new ideas in the classroom and a little joy in the kitchen.</p>
+        <div>
+          <p class="eyebrow">Hello there, I'm</p>
+          <h1 id="page-title">Izzy<span>.</span></h1>
+          <p class="lead">I'm a master's student at KIC Japan, finding new ideas in the classroom and a little joy in the kitchen.</p>
+        </div>
+        <img class="profile-image" src="images/izzy-profile.svg" alt="Animated illustration of Izzy, a student who enjoys cooking and learning about psychology">
       </section>
 
       <aside class="details" aria-labelledby="more-title">
@@ -247,11 +376,64 @@
       </aside>
     </main>
 
+    <section class="visual-section" aria-labelledby="places-title">
+      <div class="visual-heading">
+        <h2 id="places-title">Places close to my heart</h2>
+        <p>A few glimpses of Yangon, my hometown, and Myanmar.</p>
+      </div>
+      <div class="photo-grid">
+        <figure class="photo-card">
+          <img src="images/shwedagon.jpg" alt="Golden Shwedagon Pagoda rising above Yangon" loading="lazy">
+          <figcaption>
+            <strong>Shwedagon Pagoda · Yangon</strong>
+            <div class="photo-credit"><a href="https://commons.wikimedia.org/wiki/File:20160813_Shwedagon_Pagoda_9949_DxO.jpg">Photo by Jakub Hałun</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div>
+          </figcaption>
+        </figure>
+        <figure class="photo-card">
+          <img src="images/sule.jpg" alt="Sule Pagoda in the center of downtown Yangon" loading="lazy">
+          <figcaption>
+            <strong>Sule Pagoda · Yangon</strong>
+            <div class="photo-credit"><a href="https://commons.wikimedia.org/wiki/File:20160815_Sule_Pagoda_Yangon_0307.jpg">Photo by Jakub Hałun</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div>
+          </figcaption>
+        </figure>
+        <figure class="photo-card">
+          <img src="images/bagan.jpg" alt="Ancient temples and stupas spread across the Bagan plain in Myanmar" loading="lazy">
+          <figcaption>
+            <strong>Bagan · Myanmar</strong>
+            <div class="photo-credit"><a href="https://commons.wikimedia.org/wiki/File:Bagan,_Myanmar,_Htilominlo_Temple_and_other_Buddhist_stupas_in_Bagan_plain.jpg">Photo by Vyacheslav Argenberg</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="visual-section" aria-labelledby="interests-title">
+      <div class="visual-heading">
+        <h2 id="interests-title">What keeps me curious</h2>
+        <p>Good food, thoughtful questions, and always something new to learn.</p>
+      </div>
+      <div class="interest-grid">
+        <article class="interest-card">
+          <img src="images/cooking.svg" alt="Animated illustration of a bubbling pot with steam">
+          <div>
+            <h3>Cooking</h3>
+            <p>I love making something delicious and sharing it with others.</p>
+          </div>
+        </article>
+        <article class="interest-card">
+          <img src="images/psychology.svg" alt="Animated illustration of a head profile with connected ideas">
+          <div>
+            <h3>Psychology</h3>
+            <p>I'm fascinated by how people think, feel, and connect.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="note" aria-labelledby="outlook-title">
       <div class="note-mark" aria-hidden="true"></div>
       <div>
         <h2 id="outlook-title">A thought I try to live by</h2>
-        <p>Even when life takes a difficult turn, there may still be something to learn or a reason to keep going. Looking for the positive helps me enjoy the journey a little more.</p>
+        <p>I like to believe that even difficult moments may have a reason behind them. Looking for the positive helps me enjoy the journey a little more.</p>
       </div>
     </section>
 

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" role="img">
+  <rect x="12" y="12" width="336" height="236" rx="22" fill="#e6f1ed"/>
+  <path d="M190 223h-60c-12 0-19-9-15-19l15-33c-18-20-26-41-22-66 5-36 35-62 73-62 43 0 74 31 74 73 0 34-15 58-43 75v20c0 7-8 12-22 12Z" fill="#f3c65e" stroke="#203239" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M151 99c8-13 25-16 37-6 13-13 35-10 42 5 14 4 20 19 12 31 5 15-5 28-19 29-9 14-27 15-38 4-15 8-32 1-33-14-14-7-15-27-1-35Z" fill="#fff8e9" stroke="#176b68" stroke-width="5" stroke-linejoin="round"/>
+  <path d="m161 105 15 13-9 17 18 2 7 19m17-62-4 18 15 9-8 17 15 7m-62 16 15-9 15 8 13-11" fill="none" stroke="#e8795b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#176b68" stroke="#fff8e9" stroke-width="3">
+    <circle cx="161" cy="105" r="8"><animate attributeName="r" values="7;10;7" dur="2.2s" repeatCount="indefinite"/></circle>
+    <circle cx="176" cy="118" r="7"><animate attributeName="r" values="7;9;7" dur="2.7s" repeatCount="indefinite"/></circle>
+    <circle cx="187" cy="156" r="8"><animate attributeName="r" values="8;11;8" dur="2.4s" repeatCount="indefinite"/></circle>
+    <circle cx="220" cy="121" r="8"><animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="240" cy="143" r="7"><animate attributeName="r" values="7;10;7" dur="2.5s" repeatCount="indefinite"/></circle>
+  </g>
+  <path d="M115 218h110" stroke="#203239" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="75" cy="76" r="19" fill="#e8795b"/>
+  <path d="M67 76h16m-8-8v16" stroke="#fff8e9" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="285" cy="75" r="17" fill="#176b68"/>
+  <path d="m278 75 5 5 10-11" fill="none" stroke="#fff8e9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M68 148h34m-17-17v34" stroke="#f3c65e" stroke-width="5" stroke-linecap="round"/>
+</svg>
