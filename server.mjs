@@ -89,7 +89,9 @@ async function serveStatic(pathname, response) {
   try {
     filePath = pathname === "/"
       ? resolve(root, "index.html")
-      : resolve(imagesDirectory, decodeURIComponent(pathname.slice("/images/".length)));
+      : pathname === "/message-board" || pathname === "/message-board.html"
+        ? resolve(root, "message-board.html")
+        : resolve(imagesDirectory, decodeURIComponent(pathname.slice("/images/".length)));
   } catch (error) {
     if (error instanceof URIError) {
       response.writeHead(400);
@@ -99,7 +101,7 @@ async function serveStatic(pathname, response) {
     throw error;
   }
 
-  if (pathname !== "/" && !filePath.startsWith(`${imagesDirectory}${sep}`)) {
+  if (pathname.startsWith("/images/") && !filePath.startsWith(`${imagesDirectory}${sep}`)) {
     response.writeHead(400);
     response.end("Invalid path.");
     return;
@@ -142,7 +144,10 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  if (request.method === "GET" && (pathname === "/" || pathname.startsWith("/images/"))) {
+  if (
+    request.method === "GET"
+    && (pathname === "/" || pathname === "/message-board" || pathname === "/message-board.html" || pathname.startsWith("/images/"))
+  ) {
     try {
       await serveStatic(pathname, response);
     } catch (error) {

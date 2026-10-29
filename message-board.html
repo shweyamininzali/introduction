@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Send Izzy a message.">
+  <title>Message Izzy</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #203239;
+      --muted: #52666a;
+      --paper: #fffaf0;
+      --card: #ffffff;
+      --teal: #176b68;
+      --line: #e7e4d9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    .page {
+      width: min(100% - 40px, 720px);
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0 34px;
+    }
+
+    .wordmark {
+      color: var(--teal);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    a {
+      color: var(--teal);
+      text-underline-offset: 3px;
+    }
+
+    .message-card {
+      padding: clamp(24px, 6vw, 42px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+    }
+
+    .intro {
+      margin: 0 0 24px;
+      color: var(--muted);
+    }
+
+    .message-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .message-form label {
+      display: grid;
+      gap: 5px;
+      font-weight: 700;
+    }
+
+    .message-form input, .message-form textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #b9c5c1;
+      border-radius: 5px;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .message-form textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .message-form input:focus, .message-form textarea:focus {
+      outline: 3px solid #b9ded5;
+      outline-offset: 1px;
+    }
+
+    .message-form button {
+      justify-self: start;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 5px;
+      background: var(--teal);
+      color: white;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .message-form button:hover {
+      background: #105653;
+    }
+
+    .message-status {
+      min-height: 1.65em;
+      margin: 0;
+      color: var(--teal);
+    }
+
+    @media (max-width: 460px) {
+      .page {
+        width: min(100% - 28px, 560px);
+        padding-top: 18px;
+      }
+
+      header {
+        padding-bottom: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="wordmark" href="/">A little about me</a>
+      <a href="/">Back to intro</a>
+    </header>
+    <main>
+      <section class="message-card" aria-labelledby="message-title">
+        <h1 id="message-title">Send me a message</h1>
+        <p class="intro">I'd love to hear from you.</p>
+        <form class="message-form" id="message-form" action="/messages" method="post">
+          <label for="message-name">Your name
+            <input id="message-name" name="name" type="text" maxlength="100" autocomplete="name" required>
+          </label>
+          <label for="message-content">Your message
+            <textarea id="message-content" name="message" maxlength="2000" required></textarea>
+          </label>
+          <button type="submit">Send message</button>
+          <p class="message-status" id="message-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script>
+    const messageForm = document.querySelector("#message-form");
+    const messageStatus = document.querySelector("#message-status");
+
+    messageForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(messageForm);
+      messageStatus.textContent = "Sending...";
+
+      try {
+        const response = await fetch(messageForm.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.get("name"),
+            message: formData.get("message")
+          })
+        });
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "Your message could not be sent.");
+        }
+
+        messageForm.reset();
+        messageStatus.textContent = "Thanks! Your message has been received.";
+      } catch (error) {
+        messageStatus.textContent = error instanceof Error
+          ? error.message
+          : "Your message could not be sent. Please try again.";
+      }
+    });
+  </script>
+</body>
+</html>
